@@ -2,8 +2,8 @@
 from setuptools import setup
 
 def readme():
-  with open('README.md') as f:
-    return f.read()
+    with open('README.md') as f:
+        return f.read()
 
 setup(name='fetch_nju_news',
       version='0.1',
@@ -16,7 +16,7 @@ setup(name='fetch_nju_news',
       packages=['fetch_nju_news'],
       # dependecies
       install_requires=[
-        'requests',
-        'bs4',
-        ],      
+          'requests',
+          'bs4',
+          ],      
       zip_safe=False)
