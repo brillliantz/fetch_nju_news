@@ -1,6 +1,6 @@
 import unittest
 import sys
-sys.path.append(r'E:\SYS Files\Documents\Python files\fetch_nju_news')
+# sys.path.append(r'E:\SYS Files\Documents\Python files\fetch_nju_news') for debugging
 import fetch_nju_news
 
 
