@@ -48,11 +48,10 @@ class FetchNews(object):
             # when parse raw html to beautifulsoup, it will replace '&' with '&amp;', destroying the URLs.
             news_url = re.sub(r'&amp;', r'&', news_url)
             news_dict = {'title': news_title,
-                     'time': datetime.datetime.strptime(news_time, '[%Y-%m-%d]'),
+                     'localtime': datetime.datetime.strptime(news_time, '[%Y-%m-%d]'),
                      'time_str': news_time,
                      'url': news_url
                      }
-            news_dict = clean_new_line(news_dict)
             news_dict_list.append(news_dict)
         
         self._websites['jw'] = news_dict_list
@@ -129,9 +128,9 @@ class FetchNews(object):
                 news_str = '\n'.join(news_dict.values())
                 news_str_list.append(news_str)
           
-            s = ('='*5 + name + 'START'+ '='*5 + '\n'
+            s = ('='*5 + k + 'START'+ '='*5 + '\n'
                    + '\n\n'.join(news_str_list) + '\n\n'
-                   + '='*5 + name + 'END'+ '='*5 + '\n')
+                   + '='*5 + k + 'END'+ '='*5 + '\n')
             self.output[k] = s
     
     def go(self, targets):
@@ -181,9 +180,8 @@ if __name__ == '__main__':
     
     fetcher.go(['jw', 'stuex'])
 
-    t = time.localtime()
-    t_s = str(t.tm_year)+'-'+str(t.tm_mon)+'-'+str(t.tm_mday)+' '+str(t.tm_hour+8)+':'+str(t.tm_min)+':'+str(t.tm_sec)
-    print t_s
+    t = datetime.datetime.now()
+    print str(t)
 
     for k, v in fetcher.output.iteritems():
         print k
