@@ -1,6 +1,6 @@
 import unittest
 import sys
-# sys.path.append(r'E:\SYS Files\Documents\Python files\fetch_nju_news') for debugging
+sys.path.append(r'E:\SYS Files\Documents\Python files\fetch_nju_news') #for debugging
 import fetch_nju_news
 
 
@@ -29,7 +29,7 @@ class TestStringMethods(unittest.TestCase):
                               {'data': '2', 'localtime': current - short_interval},
                              ]
                             }   # test case
-        fetcher.filtrate(interval=threshold_int)
+        fetcher.filtrate(intervals={'test_website': threshold_int})
         self.assertEqual(len(fetcher._websites['test_website']), 1)
         
 if __name__ == '__main__':

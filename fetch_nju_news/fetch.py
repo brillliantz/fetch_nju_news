@@ -25,6 +25,7 @@ class FetchNews(object):
                             # each value is a list of news (news dicts) from the website.
         self.output = {}    # each key is a name of website,
                             # each value is str ready to be sent
+                            
     def jw(self):
         """Fetch latest news from jw.nju.edu.cn,
         return a list of reformatted string ready to be sent.
@@ -92,17 +93,14 @@ class FetchNews(object):
         
         self._websites['stuex'] = news_dict_list
     
-    def filtrate(self, interval=3):
+    def filtrate(self, intervals={'jw': 3, 'stuex': 9}):
         """Drop news which are outdated.
         
-        Parameters
-        -----------
-        interval : int. Criteria used to judge "latest".
-        
         """
+        self._intervals = intervals
         now = datetime.datetime.now()
-        func = lambda x: (now - x['localtime']) <= datetime.timedelta(interval)
         for k, v in self._websites.iteritems():
+            func = lambda x: (now - x['localtime']) <= datetime.timedelta(self._intervals[k])
             self._websites[k] = filter(func, v)
     
     def combine(self):
@@ -144,13 +142,11 @@ class FetchNews(object):
                 for target in targets:
                     if target == 'jw':
                         self.jw()
-                        interval = 3
                     elif target == 'stuex':
                         self.stuex()
-                        interval = 9
                     else:
                         print 'ERROR! [target] is not recognized!'
-                self.filtrate(interval)
+                self.filtrate()
                 self.combine()
             else:
                 print 'ERROR! [targets] is not recognized!'    
